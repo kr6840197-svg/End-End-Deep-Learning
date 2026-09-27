@@ -120,14 +120,15 @@ input_scaled = scaler.transform(input_data)
 input_scaled
 
 # %%
-prediction = model.predict(input_scaled)
+if st.button("Predict Churn"):
 
-prediction
+    prediction = model.predict(input_scaled)
 
-# %%
-if prediction[0][0] > 0.5:
-    print("Customer will churn")
-else:
-    print("Customer will not churn")
+    churn_probability = prediction[0][0]
 
+    st.write(f"Churn Probability: {churn_probability * 100:.2f}%")
 
+    if churn_probability > 0.5:
+        st.error("🔴 Customer is likely to churn")
+    else:
+        st.success("🟢 Customer is likely to stay")
